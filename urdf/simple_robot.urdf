@@ -1,20 +1,8 @@
-<robot name="pi_robot">
+<robot name="simple_robot">
 
 	<!-- * * * Link Definitions * * * -->
 
- 	<link name="base_link">
-		<visual>
-		    <origin xyz="0 0 0.025" rpy="0 0 0"/>
-			<geometry>
-				<box size="0.3 0.3 0.05"/>
-			</geometry>
-			<material name="Cyan1">
-	       		<color rgba="0 0.9 0.9 1.0"/>
-	     	</material>
-		</visual>	
-	</link>
-
-  	<link name="upper_base_link">
+  	<link name="link0"> <!--base_link -->
 		<visual>
 			<origin xyz="0 0 0" rpy="0 0 0"/>
 			<geometry>
@@ -26,7 +14,7 @@
 	   </visual>
 	</link>
 
-  	<link name="torso_link">
+  	<link name="link1"> <!-- cylinder0 -->
 		<visual>
 			<origin xyz="0 0 0" rpy="0 0 0"/>
 			<geometry>
@@ -38,7 +26,7 @@
 	   </visual>
 	</link>	
 		
-	<link name="jointlink_1">
+	<link name="link2"> <!-- ball0 -->
 		<visual>
 			<origin xyz="0 0 0" rpy="0 0 0"/>
 			<geometry>
@@ -50,7 +38,7 @@
 	   </visual>
 	</link>
 	
-	<link name="link_1">
+	<link name="link3"> <!-- cylinder1 -->
 		<visual>
 			<origin xyz="0 0 0" rpy="0 0 0"/>
 			<geometry>
@@ -62,7 +50,7 @@
 	   </visual>
 	</link>
 		
-	<link name="jointlink_2">
+	<link name="link4"> <!-- ball1 -->
 		<visual>
 			<origin xyz="0 0 0" rpy="0 0 0"/>
 			<geometry>
@@ -74,7 +62,7 @@
 	   </visual>
 	</link>
 	
-	<link name="link_2">
+	<link name="link5"> <!-- cylinder2 -->
 		<visual>
 			<origin xyz="0 0 0" rpy="0 0 0"/>
 			<geometry>
@@ -86,7 +74,7 @@
 	   </visual>
 	</link>
 		
-	<link name="jointlink_3">
+	<link name="link6"> <!-- ball3 -->
 		<visual>
 			<origin xyz="0 0 0" rpy="0 0 0"/>
 			<geometry>
@@ -98,7 +86,7 @@
 	   </visual>
 	</link>
 	
-	<link name="link_3">
+	<link name="link7"> <!-- cylinder3 -->
 		<visual>
 			<origin xyz="0 0 0" rpy="0 0 0"/>
 			<geometry>
@@ -110,7 +98,7 @@
 	   </visual>
 	</link>
 
-  <link name="gripper_base">
+  <link name="link8"> <!-- gripper_base -->
   <inertial>
     <mass value="1"/>
     <inertia ixx="100" ixy="0" ixz="0" iyy="100" iyz="0" izz="100" />
@@ -134,7 +122,7 @@
   </collision>
   </link>
 
- <link name="left_fingertip">
+ <link name="link9"> <!-- left_fingertip -->
   <inertial>
     <mass value="1"/>
     <inertia ixx="100" ixy="0" ixz="0" iyy="100" iyz="0" izz="100" />
@@ -158,7 +146,7 @@
   </collision>
   </link>
 
-    <link name="right_fingertip">
+    <link name="link10"> <!-- right fingertip -->
   <inertial>
     <mass value="1"/>
     <inertia ixx="100" ixy="0" ixz="0" iyy="100" iyz="0" izz="100" />
@@ -186,86 +174,80 @@
 	
 	<!-- * * * Joint Definitions * * * -->
 	
-	<joint name="base_joint" type="fixed">
-    	<parent link="base_link"/>
-    	<child link="upper_base_link"/>
-    	<origin xyz="0 0 0.05" rpy="0 0 0"/>
-	</joint>
-
-	<joint name="torso_joint" type="revolute">
-    	<parent link="upper_base_link"/>
-    	<child link="torso_link"/>
+	<joint name="joint0" type="revolute">  <!-- base -->
+    	<parent link="link0"/>
+    	<child link="link1"/>
     	<origin xyz="0 0 0.10" rpy="0 0 0"/>
     	<axis xyz="0 0 1"/>
-    	<limit lower="-3.1416" upper="3.1416" effort="10" velocity="3"/>
+    	<limit lower="-0.6" upper="0.6" effort="0" velocity="3"/>
   	</joint>
  
- 	<joint name="joint_1" type="revolute">
-    	<parent link="torso_link"/>
-    	<child link="jointlink_1"/>
+ 	<joint name="joint1" type="revolute">  <!-- cylinder0 -->
+    	<parent link="link1"/>
+    	<child link="link2"/>
     	<origin xyz="0 0 0.1" rpy="0 0 0"/>
-		<limit lower="-1.57" upper="1.57" effort="10" velocity="3"/>
+		<limit lower="0" upper="1.6" effort="10" velocity="3"/>
         <axis xyz="0 1 0"/>
 	</joint>
 	 
- 	<joint name="jointlink_1_link_1" type="fixed">
-    	<parent link="jointlink_1"/>
-    	<child link="link_1"/>
+ 	<joint name="joint2" type="fixed">  <!-- ball0 to cylinder0 -->
+    	<parent link="link2"/>
+    	<child link="link3"/>
     	<origin xyz="0 0 0.1" rpy="0 0 0"/>
         <axis xyz="0 0 1"/>
 	</joint>
  
- 	<joint name="joint_2" type="revolute">
-    	<parent link="link_1"/>
-    	<child link="jointlink_2"/>
+ 	<joint name="joint3" type="revolute">  <!-- cylinder1 -->
+    	<parent link="link3"/>
+    	<child link="link4"/>
     	<origin xyz="0 0 0.1" rpy="0 0 0"/>
 		<limit lower="-1.57" upper="1.57" effort="10" velocity="3"/>
         <axis xyz="0 1 0"/>
 	</joint>
 	 
- 	<joint name="jointlink_2_link_2" type="fixed">
-    	<parent link="jointlink_2"/>
-    	<child link="link_2"/>
+ 	<joint name="joint4" type="fixed">  <!-- ball1 to cylinder1 -->
+    	<parent link="link4"/>
+    	<child link="link5"/>
     	<origin xyz="0 0 0.1" rpy="0 0 0"/>
         <axis xyz="0 0 1"/>
 	</joint>
  
- 	<joint name="joint_3" type="revolute">
-    	<parent link="link_2"/>
-    	<child link="jointlink_3"/>
+ 	<joint name="joint5" type="revolute">  <!-- cylinder2 -->
+    	<parent link="link5"/>
+    	<child link="link6"/>
     	<origin xyz="0 0 0.1" rpy="0 0 0"/>
 		<limit lower="-1.57" upper="1.57" effort="10" velocity="3"/>
         <axis xyz="0 1 0"/>
 	</joint>
 	 
- 	<joint name="jointlink_3_link_3" type="fixed">
-    	<parent link="jointlink_3"/>
-    	<child link="link_3"/>
+ 	<joint name="joint6" type="fixed">  <!-- ball2 to cylinder2 -->
+    	<parent link="link6"/>
+    	<child link="link7"/>
     	<origin xyz="0 0 0.1" rpy="0 0 0"/>
         <axis xyz="0 0 1"/>
 	</joint>
 	 
- 	<joint name="gripper_joint" type="revolute">
-    	<parent link="link_3"/>
-    	<child link="gripper_base"/>
+ 	<joint name="joint7" type="revolute">  <!-- gripper_base -->
+    	<parent link="link7"/>
+    	<child link="link8"/>
     	<origin xyz="0 0 0" rpy="-1.5708 0  0"/>
         <axis xyz="0 1 0"/>
-    	<limit lower="-3.1416" upper="3.1416" effort="10" velocity="3"/>
+    	<limit lower="-1.57" upper="1.57" effort="10" velocity="3"/>
 	</joint>
  
-  <joint name="gripper_base_to_right_fingertip" type="prismatic">
+  <joint name="joint8" type="prismatic">  <!-- gripper_base_to_right_fingertip -->
     <axis xyz="1 0 0"/>
     <limit effort="1.0" lower="-0.03" upper="0.0" velocity="0.5"/>
-    <parent link="gripper_base"/>
-    <child link="right_fingertip"/>
+    <parent link="link8"/>
+    <child link="link9"/>
     <origin xyz="0.04 -0.135 -0.0"/>
   </joint>
 
-    <joint name="gripper_base_to_left_fingertip" type="prismatic">
+    <joint name="joint9" type="prismatic">  <!-- gripper_base_to_left_fingertip -->
     <axis xyz="1 0 0"/>
     <limit effort="1.0" lower="0" upper="0.03" velocity="0.5"/>
-    <parent link="gripper_base"/>
-    <child link="left_fingertip"/>
+    <parent link="link8"/>
+    <child link="link10"/>
     <origin xyz="-0.04 -0.135 0.0"/>
   </joint>
 
